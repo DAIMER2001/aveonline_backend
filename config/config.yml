@@ -1,0 +1,9 @@
+database:
+  user: daimer
+  password: Redes1212
+  host: localhost
+  dbname: aveonline_daimer
+  port: 5433
+
+server:
+  address: 8082

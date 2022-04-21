@@ -1,0 +1,508 @@
+basePath: /v1
+definitions:
+  model.Invoice:
+    properties:
+      createdAt:
+        type: string
+      creation_date:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      medicines:
+        items:
+          $ref: '#/definitions/model.Medicine'
+        type: array
+      pago_total:
+        maximum: 10000000000
+        minimum: 0.1
+        type: number
+      promotions:
+        items:
+          $ref: '#/definitions/model.Promotion'
+        type: array
+      updatedAt:
+        type: string
+    required:
+    - creation_date
+    - pago_total
+    type: object
+  model.Medicine:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      location:
+        maxLength: 50
+        minLength: 3
+        type: string
+      name:
+        maxLength: 50
+        minLength: 5
+        type: string
+      price:
+        maximum: 10000000000
+        minimum: 0.1
+        type: number
+      updatedAt:
+        type: string
+    required:
+    - location
+    - name
+    - price
+    type: object
+  model.Promotion:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      descripcion:
+        maxLength: 100
+        minLength: 5
+        type: string
+      endDate:
+        type: string
+      id:
+        type: integer
+      medicines:
+        items:
+          $ref: '#/definitions/model.Medicine'
+        type: array
+      porcentaje:
+        maximum: 70
+        minimum: 0.1
+        type: number
+      startDate:
+        type: string
+      updatedAt:
+        type: string
+    required:
+    - descripcion
+    - endDate
+    - porcentaje
+    - startDate
+    type: object
+host: localhost:8082
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /invoice:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Invoice'
+            type: array
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+    post:
+      consumes:
+      - application/json
+      description: creates Resource directory
+      parameters:
+      - description: invoice_id
+        in: path
+        name: invoice_id
+        required: true
+        type: integer
+      - description: date_payment
+        in: path
+        name: fecha_crear
+        required: true
+        type: string
+      - description: full_payment
+        in: path
+        name: pago_total
+        required: true
+        type: integer
+      - description: medicines
+        in: path
+        name: medicines
+        required: true
+        type: array
+      - description: promotions
+        in: path
+        name: promotions
+        required: true
+        type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Invoice'
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Updates a invoice
+      tags:
+      - Invoices
+  /invoice/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get invoices
+      parameters:
+      - description: invoice_id
+        in: path
+        name: invoice_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Invoice'
+            type: array
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: List invoices
+      tags:
+      - invoices
+  /invoice{id}:
+    delete:
+      consumes:
+      - application/json
+      description: creates Resource directory
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Invoice'
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Delete a invoice
+      tags:
+      - Invoices
+  /medicine:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Medicine'
+            type: array
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+    post:
+      consumes:
+      - application/json
+      description: creates Resource directory
+      parameters:
+      - description: medicine_id
+        in: path
+        name: medicine_id
+        required: true
+        type: integer
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: price
+        in: path
+        name: price
+        required: true
+        type: integer
+      - description: location
+        in: path
+        name: location
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Medicine'
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Updates a medicine
+      tags:
+      - Medicines
+  /medicine/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get medicines
+      parameters:
+      - description: medicine_id
+        in: path
+        name: medicine_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Medicine'
+            type: array
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: List medicines
+      tags:
+      - medicines
+  /medicine{id}:
+    delete:
+      consumes:
+      - application/json
+      description: creates Resource directory
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Medicine'
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Delete a medicine
+      tags:
+      - Medicines
+  /promotion:
+    get:
+      consumes:
+      - application/json
+      description: get promotions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Promotion'
+            type: array
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: List promotions
+      tags:
+      - promotions
+    post:
+      consumes:
+      - application/json
+      description: creates Resource directory
+      parameters:
+      - description: promotion_id
+        in: path
+        name: promotion_id
+        required: true
+        type: integer
+      - description: description
+        in: path
+        name: description
+        required: true
+        type: string
+      - description: percentage
+        in: path
+        name: percentage
+        required: true
+        type: integer
+      - description: start_date
+        in: path
+        name: start_date
+        required: true
+        type: string
+      - description: end_date
+        in: path
+        name: end_date
+        required: true
+        type: string
+      - description: promotions
+        in: path
+        name: promotions
+        required: true
+        type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Promotion'
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Updates a promotion
+      tags:
+      - Promotions
+  /promotion/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get promotions
+      parameters:
+      - description: promotion_id
+        in: path
+        name: promotion_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Promotion'
+            type: array
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: List promotions
+      tags:
+      - promotions
+  /promotion{id}:
+    delete:
+      consumes:
+      - application/json
+      description: creates Resource directory
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Promotion'
+        "400":
+          description: error
+          schema:
+            type: string
+        "404":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Delete a promotion
+      tags:
+      - Promotions
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
