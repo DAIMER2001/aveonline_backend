@@ -31,7 +31,7 @@ func ReadConfig() {
 
 	viper.SetConfigName("config")
 	viper.SetConfigType("yml")
-	viper.AddConfigPath(filepath.Join("$HOME", "Proyectos/go/golan-rest-simple", "config"))
+	viper.AddConfigPath(filepath.Join("$HOME", "Proyectos/go/aveonline_backend", "config"))
 
 	viper.AutomaticEnv()
 
